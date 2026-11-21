@@ -20,13 +20,6 @@ jobs:
         python-version: '3.12'
         cache: 'pip'
 
-    - name: Install Google Chrome
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y wget curl unzip libxi6 libgconf-2-4 libnss3
-        wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
-
     - name: Install Python Dependencies
       run: |
         python -m pip install --upgrade pip
