@@ -1,0 +1,13 @@
+{
+  "name": "saucedemo-qa-automation",
+  "version": "1.0.0",
+  "description": "Comprehensive UI and API QA Test Automation Suite for SauceDemo and Reqres",
+  "scripts": {
+    "test": "pytest",
+    "test:ui": "pytest tests/test_saucedemo_ui.py",
+    "test:api": "pytest tests/test_reqres_api.py"
+  },
+  "keywords": ["qa", "testing", "selenium", "pytest", "saucedemo", "api"],
+  "author": "Vishwa Vijay Kumar",
+  "license": "MIT"
+}
