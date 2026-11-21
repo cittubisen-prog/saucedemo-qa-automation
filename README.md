@@ -63,7 +63,7 @@ saucedemo-qa-automation/
 
 ---
 
-## 🚀 Setup & Execution Guide
+## Setup & Execution Guide
 
 ### Prerequisites
 * **Python 3.10+** (Tested on Python 3.12)
@@ -103,7 +103,7 @@ pytest tests/test_reqres_api.py
 
 ---
 
-## 🧪 Part 3: UI Test Automation Suite Overview
+##  Part 3: UI Test Automation Suite Overview
 
 The UI suite implements the **Page Object Model (POM)** pattern for maintainability and separation of concerns. All 10 tests run in headless Chrome mode:
 
@@ -122,7 +122,7 @@ The UI suite implements the **Page Object Model (POM)** pattern for maintainabil
 
 ---
 
-## 🌐 Part 4: API Testing Suite Overview
+##  Part 4: API Testing Suite Overview
 
 Automated tests for `https://reqres.in` targeting both status codes and **response body shape / schema integrity**:
 
@@ -134,7 +134,7 @@ Automated tests for `https://reqres.in` targeting both status codes and **respon
 
 ---
 
-## 🐛 Part 2: Bug Reports Summary
+##  Part 2: Bug Reports Summary
 
 Full details in [docs/BUG_REPORTS.md](docs/BUG_REPORTS.md):
 
@@ -144,7 +144,7 @@ Full details in [docs/BUG_REPORTS.md](docs/BUG_REPORTS.md):
 
 ---
 
-## ⚙️ Bonus: GitHub Actions CI Pipeline
+## Bonus: GitHub Actions CI Pipeline
 
 The project includes `.github/workflows/ci.yml` which executes automatically on every `push` and `pull_request` to `main`:
 1. Provisions Ubuntu runner with Python 3.12.
