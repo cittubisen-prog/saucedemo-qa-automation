@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 import time
 
@@ -66,6 +67,8 @@ class InventoryPage(BasePage):
 
     def open_cart(self):
         self.click(self.CART_LINK)
+        self.wait.until(EC.url_contains("cart.html"))
+        time.sleep(0.5)
 
     def sort_by(self, sort_value):
         select = Select(self.find(self.SORT_DROPDOWN))

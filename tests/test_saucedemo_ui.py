@@ -83,6 +83,7 @@ class TestSauceDemoUI:
         inventory_page.open_cart()
 
         cart_page = CartPage(driver)
+        assert "cart.html" in driver.current_url
         assert "Sauce Labs Bike Light" in cart_page.get_cart_item_names()
 
         cart_page.continue_shopping()
@@ -90,6 +91,7 @@ class TestSauceDemoUI:
         assert inventory_page.get_cart_count() == 1
 
         inventory_page.open_cart()
+        assert "cart.html" in driver.current_url
         assert "Sauce Labs Bike Light" in cart_page.get_cart_item_names()
 
     def test_08_end_to_end_checkout_workflow(self, driver):
