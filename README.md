@@ -57,7 +57,7 @@ saucedemo-qa-automation/
 ├── package.json                       # Cross-platform npm scripts
 ├── pytest.ini                         # Pytest configuration & options
 ├── requirements.txt                   # Python dependencies
-├── Saucedemo_QA_Assessment_Report.xlsx # Excel spreadsheet with Test Plan & Cases
+├── ZACFF_Junior_QA_Assessment_Vishwa_Vijay_Kumar.xlsx # Excel spreadsheet with Test Plan & Cases
 └── README.md                          # Main project documentation
 ```
 
