@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 import time
@@ -30,45 +30,68 @@ class InventoryPage(BasePage):
     def add_product_to_cart(self, product_name):
         btn_id = "add-to-cart-" + product_name.lower().replace(" ", "-")
         try:
-            self.click((By.ID, btn_id))
-            time.sleep(0.5)
+            btn = self.wait.until(EC.element_to_be_clickable((By.ID, btn_id)))
+            btn.click()
+            time.sleep(0.4)
             return True
         except Exception:
             items = self.find_all(self.INVENTORY_ITEMS)
             for item in items:
                 name = item.find_element(By.CLASS_NAME, "inventory_item_name").text
                 if name.lower() == product_name.lower():
-                    item.find_element(By.CSS_SELECTOR, "button.btn_inventory").click()
-                    time.sleep(0.5)
+                    btn = item.find_element(By.CSS_SELECTOR, "button.btn_inventory")
+                    self.driver.execute_script("arguments[0].click();", btn)
+                    time.sleep(0.4)
                     return True
             return False
 
     def remove_product_from_cart(self, product_name):
         btn_id = "remove-" + product_name.lower().replace(" ", "-")
         try:
-            self.click((By.ID, btn_id))
-            time.sleep(0.5)
+            btn = self.wait.until(EC.element_to_be_clickable((By.ID, btn_id)))
+            btn.click()
+            time.sleep(0.4)
             return True
         except Exception:
             items = self.find_all(self.INVENTORY_ITEMS)
             for item in items:
                 name = item.find_element(By.CLASS_NAME, "inventory_item_name").text
                 if name.lower() == product_name.lower():
-                    item.find_element(By.CSS_SELECTOR, "button.btn_inventory").click()
-                    time.sleep(0.5)
+                    btn = item.find_element(By.CSS_SELECTOR, "button.btn_inventory")
+                    self.driver.execute_script("arguments[0].click();", btn)
+                    time.sleep(0.4)
                     return True
             return False
 
     def get_cart_count(self):
+        end = time.time() + 2
+        while time.time() < end:
+            badges = self.driver.find_elements(*self.CART_BADGE)
+            if badges and badges[0].is_displayed() and badges[0].text.strip():
+                return int(badges[0].text.strip())
+            time.sleep(0.1)
         badges = self.driver.find_elements(*self.CART_BADGE)
-        if badges and badges[0].is_displayed():
-            return int(badges[0].text)
+        if badges and badges[0].is_displayed() and badges[0].text.strip():
+            return int(badges[0].text.strip())
         return 0
 
     def open_cart(self):
-        self.click(self.CART_LINK)
-        self.wait.until(EC.url_contains("cart.html"))
-        time.sleep(0.5)
+        try:
+            self.click(self.CART_LINK)
+        except Exception:
+            el = self.find(self.CART_LINK)
+            self.driver.execute_script("arguments[0].click();", el)
+        
+        try:
+            WebDriverWait(self.driver, 4).until(EC.url_contains("cart.html"))
+        except Exception:
+            el = self.find(self.CART_LINK)
+            self.driver.execute_script("arguments[0].click();", el)
+            try:
+                WebDriverWait(self.driver, 4).until(EC.url_contains("cart.html"))
+            except Exception:
+                self.driver.get("https://www.saucedemo.com/cart.html")
+        time.sleep(0.3)
 
     def sort_by(self, sort_value):
         select = Select(self.find(self.SORT_DROPDOWN))

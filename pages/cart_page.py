@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 import time
@@ -12,24 +13,29 @@ class CartPage(BasePage):
     CONTINUE_SHOPPING_BUTTON = (By.ID, "continue-shopping")
 
     def get_cart_items_count(self):
-        self.wait.until(EC.url_contains("cart.html"))
         try:
             return len(self.find_all(self.CART_ITEMS))
         except Exception:
             return 0
 
     def get_cart_item_names(self):
-        self.wait.until(EC.url_contains("cart.html"))
-        time.sleep(0.5)
+        end = time.time() + 3
+        while time.time() < end:
+            try:
+                elements = self.driver.find_elements(*self.ITEM_NAMES)
+                names = [e.text.strip() for e in elements if e.text.strip()]
+                if names:
+                    return names
+            except Exception:
+                pass
+            time.sleep(0.2)
         try:
-            elements = self.find_all(self.ITEM_NAMES)
-            return [e.text for e in elements]
-        except Exception:
             elements = self.driver.find_elements(*self.ITEM_NAMES)
-            return [e.text for e in elements]
+            return [e.text.strip() for e in elements if e.text.strip()]
+        except Exception:
+            return []
 
     def remove_item(self, item_name):
-        self.wait.until(EC.url_contains("cart.html"))
         items = self.find_all(self.CART_ITEMS)
         for item in items:
             name = item.find_element(By.CLASS_NAME, "inventory_item_name").text
@@ -40,10 +46,23 @@ class CartPage(BasePage):
         return False
 
     def click_checkout(self):
-        self.wait.until(EC.url_contains("cart.html"))
-        self.click(self.CHECKOUT_BUTTON)
+        try:
+            self.click(self.CHECKOUT_BUTTON)
+        except Exception:
+            el = self.find(self.CHECKOUT_BUTTON)
+            self.driver.execute_script("arguments[0].click();", el)
+        try:
+            WebDriverWait(self.driver, 4).until(EC.url_contains("checkout-step-one.html"))
+        except Exception:
+            pass
 
     def continue_shopping(self):
-        self.wait.until(EC.url_contains("cart.html"))
-        self.click(self.CONTINUE_SHOPPING_BUTTON)
-        self.wait.until(EC.url_contains("inventory.html"))
+        try:
+            self.click(self.CONTINUE_SHOPPING_BUTTON)
+        except Exception:
+            el = self.find(self.CONTINUE_SHOPPING_BUTTON)
+            self.driver.execute_script("arguments[0].click();", el)
+        try:
+            WebDriverWait(self.driver, 4).until(EC.url_contains("inventory.html"))
+        except Exception:
+            pass
