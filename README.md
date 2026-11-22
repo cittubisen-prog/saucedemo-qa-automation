@@ -1,4 +1,4 @@
-# SauceDemo E-Commerce QA Automation & Assessment Suite
+# SauceDemo  QA Automation  Assessment Suite
 
 ![QA Automation CI Pipeline](https://github.com/cittubisen-prog/saucedemo-qa-automation/actions/workflows/ci.yml/badge.svg)
 ![Python Version](https://img.shields.io/badge/python-3.12-blue.svg)
